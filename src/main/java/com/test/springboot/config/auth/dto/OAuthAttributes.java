@@ -27,6 +27,7 @@ public class OAuthAttributes {
 
     public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {
         if("naver".equals(registrationId)) {
+            System.out.println("Naver Login!");
             return ofNaver("id", attributes);
         }
 
@@ -60,7 +61,7 @@ public class OAuthAttributes {
                 .name(name)
                 .email(email)
                 .picture(picture)
-                .role(Role.GEUST)
+                .role(Role.GUEST)
                 .build();
     }
 }
