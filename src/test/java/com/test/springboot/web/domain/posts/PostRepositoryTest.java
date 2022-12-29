@@ -44,14 +44,21 @@ public class PostRepositoryTest {
     }
 
     @Test
-    public void BaseTimeEntity_submit(){
-        LocalDateTime now  = LocalDateTime.of(2019,6,4,0,0,0);
-        postsRepository.save(Posts.builder().title("title").content("content").author("author").build());
-
+    public void BaseTimeEntity_등록() {
+        //given
+        LocalDateTime now = LocalDateTime.of(2019, 6, 4, 0, 0, 0);
+        postsRepository.save(Posts.builder()
+                .title("title")
+                .content("content")
+                .author("author")
+                .build());
+        //when
         List<Posts> postsList = postsRepository.findAll();
-        Posts posts = postsList.get(0);
 
-        System.out.println(">>>>>>>>>>>>>> createDate=" + posts.getCreateDate() + ",modifiedDate=" + posts.getModifiedDate());
+        //then
+        Posts posts = postsList.get(0);
+        System.out.println(posts);
+        System.out.println(">>>>>>>>> createDate=" + posts.getCreateDate() + ", modifiedDate=" + posts.getModifiedDate());
 
         assertThat(posts.getCreateDate()).isAfter(now);
         assertThat(posts.getModifiedDate()).isAfter(now);
