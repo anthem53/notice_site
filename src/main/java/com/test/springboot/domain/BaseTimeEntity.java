@@ -21,4 +21,11 @@ public class BaseTimeEntity {
 
     @LastModifiedDate
     private LocalDateTime modifiedDate;
+
+    public void print_currentTime()
+    {
+        System.out.println(this.createDate);
+        System.out.println(this.modifiedDate);
+
+    }
 }

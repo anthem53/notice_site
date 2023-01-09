@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
@@ -52,16 +53,20 @@ public class PostRepositoryTest {
                 .content("content")
                 .author("author")
                 .build());
+
+
         //when
         List<Posts> postsList = postsRepository.findAll();
 
         //then
         Posts posts = postsList.get(0);
-        System.out.println(posts);
+        System.out.println(posts.getTitle());
+        System.out.println(posts.getId());
+        System.out.println(posts.getAuthor());
         System.out.println(">>>>>>>>> createDate=" + posts.getCreateDate() + ", modifiedDate=" + posts.getModifiedDate());
 
 
-        //assertThat(posts.getCreateDate()).isAfter(now);
-        //assertThat(posts.getModifiedDate()).isAfter(now);
+        assertThat(posts.getCreateDate()).isAfter(now);
+        assertThat(posts.getModifiedDate()).isAfter(now);
     }
 }

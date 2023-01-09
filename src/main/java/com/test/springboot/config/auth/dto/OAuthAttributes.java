@@ -9,7 +9,7 @@ import lombok.Getter;
 import java.util.Map;
 
 @Getter
-public class OAuthAttributes {
+public class   OAuthAttributes {
     private Map<String, Object> attributes;
     private String nameAttributeKey;
     private String name;
@@ -61,7 +61,7 @@ public class OAuthAttributes {
                 .name(name)
                 .email(email)
                 .picture(picture)
-                .role(Role.GUEST)
+                .role(Role.USER)
                 .build();
     }
 }
