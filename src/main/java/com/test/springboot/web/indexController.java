@@ -57,10 +57,27 @@ public class indexController {
     }
 
     @GetMapping("/posts/inquiry/{id}")
-    public String postInquiry(@PathVariable Long id, Model model){
+    public String postInquiry(@PathVariable Long id, Model model, @LoginUser SessionUser user){
         PostsResponseDto dto = postsService.findById(id);
 
         model.addAttribute("post",dto);
+
+        if (user != null){
+            String a = user.getName();
+            String postAuthor = dto.getAuthor();
+            a = a.replace(" ", "_");
+            System.out.println("user ID : "+a);
+            System.out.println("Post author : "+postAuthor);
+
+            if (a.equals(postAuthor) == true){
+                model.addAttribute("isAuthor",true);
+                System.out.println("a == author");
+            }
+            else{
+                model.addAttribute("isAuthor",false);
+            }
+
+        }
 
         return "posts-inquiry";
     }
