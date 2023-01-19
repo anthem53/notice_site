@@ -63,6 +63,7 @@ public class indexController {
         model.addAttribute("post",dto);
 
         if (user != null){
+            model.addAttribute("user",user);
             String a = user.getName();
             String postAuthor = dto.getAuthor();
             a = a.replace(" ", "_");
@@ -76,7 +77,9 @@ public class indexController {
             else{
                 model.addAttribute("isAuthor",false);
             }
-
+        }
+        else{
+            ;
         }
 
         return "posts-inquiry";
