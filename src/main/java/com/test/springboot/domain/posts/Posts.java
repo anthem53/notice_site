@@ -1,16 +1,13 @@
 package com.test.springboot.domain.posts;
 
 import com.test.springboot.domain.BaseTimeEntity;
+import com.test.springboot.domain.comments.Comments;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
+import javax.persistence.*;
+import java.util.List;
 
 
 @Getter
@@ -28,6 +25,12 @@ public class Posts extends BaseTimeEntity {
     private String content;
 
     private String author;
+
+    @OneToMany(mappedBy = "posts", fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
+    @OrderBy("id asc")
+    private List<Comments> comments;
+
+
 
     @Builder
     public Posts(String title , String content, String author){
