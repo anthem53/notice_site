@@ -34,19 +34,36 @@
         <div class="card-header bi bi-chat-right-dots"> Write a Comment</div>
         {{! 댓글작성 부분}}
         <form>
-            <input type="hidden" id="postsId" value="">
-            {{#user}}
+            <input type="hidden" id="commentAuthor" value="{{userName}}">
+            {{#userName}}
                 <div class="card-body">
                     <textarea id="comment" class="form-control" rows="4" cols="10" placeholder="댓글을 입력하세요"></textarea>
                 </div>
                 <div class="card-footer">
                     <button type="button" id="btn-comment-save"class="btn btn-outline-primary bi bi-pencil-square"> 등록</button>
                 </div>
-            {{/user}}
-            {{^user}}
+            {{/userName}}
+            {{^userName}}
                 <div class="card-body" style="font-size: small"><a href="/login">로그인</a>을 하시면 댓글을 등록할 수 있습니다.</div>
-            {{/user}}
+            {{/userName}}
         </form>
+    </div>
+    {{! Comments }}
+    <div class="card">
+        <div class="card-header bi bi-chat-dots"> {{#comments.size}}{{comments.size}}{{/comments.size}} Comments</div>
+        {{! 댓글내용 부분 }}
+        <ul class="list-group-flush">
+            {{#comments}}
+                <li class="list-group-item">
+                <span>
+                    <span style="font-size: small">{{author}}</span>
+                    <button class="badge bi bi-pencil-square"> 수정</button>
+                    <button class="badge bi bi-trash"> 삭제</button>
+                </span>
+                    <div>{{content}}</div>
+                </li>
+            {{/comments}}
+        </ul>
     </div>
 
 

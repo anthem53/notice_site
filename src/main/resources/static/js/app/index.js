@@ -12,6 +12,10 @@ var main = {
         $('#btn-delete').on('click', function () {
             _this.delete();
         });
+
+        $('#btn-comment-save').on('click', function (){
+            _this.commentSave();
+        });
     },
     save : function () {
         var data = {
@@ -68,6 +72,33 @@ var main = {
         }).fail(function (error) {
             alert(JSON.stringify(error));
         });
+    },
+
+    commentSave : function (){
+
+        var id = $('#id').val();
+
+
+
+        var data = {
+            author: $('#commentAuthor').val(),
+            content: $('#comment').val()
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '/api/v1/posts/'+ id +'/comment/',
+            dataType: 'json',
+            contentType:'application/json; charset=utf-8',
+            data: JSON.stringify(data)
+        }).done(function() {
+            alert('글이 등록되었습니다.');
+            window.location.href = '/posts/inquiry/'+id;
+        }).fail(function (error) {
+            alert(JSON.stringify(error));
+        });
+
+
     }
 
 };

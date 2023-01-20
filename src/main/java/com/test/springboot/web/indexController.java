@@ -3,6 +3,7 @@ package com.test.springboot.web;
 import com.test.springboot.config.auth.LoginUser;
 import com.test.springboot.config.auth.dto.SessionUser;
 import com.test.springboot.service.posts.PostsService;
+import com.test.springboot.web.Dto.CommentsResponseDto;
 import com.test.springboot.web.Dto.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -59,11 +61,17 @@ public class indexController {
     @GetMapping("/posts/inquiry/{id}")
     public String postInquiry(@PathVariable Long id, Model model, @LoginUser SessionUser user){
         PostsResponseDto dto = postsService.findById(id);
-
         model.addAttribute("post",dto);
 
+        List<CommentsResponseDto> comments = dto.getComments();
+
+        /* 댓글 관련 */
+        if (comments != null && !comments.isEmpty()) {
+            model.addAttribute("comments", comments);
+        }
+
         if (user != null){
-            model.addAttribute("user",user);
+            model.addAttribute("userName",user.getName());
             String a = user.getName();
             String postAuthor = dto.getAuthor();
             a = a.replace(" ", "_");

@@ -4,6 +4,7 @@ import com.test.springboot.domain.posts.Posts;
 import lombok.Getter;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 public class PostsResponseDto {
@@ -18,7 +19,7 @@ public class PostsResponseDto {
         this.title = entity.getTitle();
         this.content = entity.getContent();
         this.author = entity.getAuthor();
-
+        this.comments = entity.getComments().stream().map(CommentsResponseDto::new).collect(Collectors.toList());
 
     }
 
