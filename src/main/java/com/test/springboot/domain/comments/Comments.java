@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
@@ -25,6 +26,8 @@ public class Comments extends BaseTimeEntity {
     @Column(columnDefinition = "TEXT",nullable = false)
     private String content; // 덧글 내용
 
+
+
     @ManyToOne
     @JoinColumn(name="Posts_id")
     private Posts posts;
@@ -39,6 +42,10 @@ public class Comments extends BaseTimeEntity {
         this.content = content;
         this.posts = posts;
         this.user = user;
+    }
+
+    public void update (String content){
+        this.content = content;
     }
 
 

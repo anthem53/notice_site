@@ -1,11 +1,14 @@
 package com.test.springboot.domain.user;
 
 import com.test.springboot.domain.BaseTimeEntity;
+import com.test.springboot.domain.comments.Comments;
+import com.test.springboot.domain.posts.Posts;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -28,6 +31,14 @@ public class User extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
+    @OrderBy("id asc")
+    private List<Comments> comments;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
+    @OrderBy("id asc")
+    private List<Posts> posts;
 
     @Builder
     public User(String name, String email,String picture,Role role){

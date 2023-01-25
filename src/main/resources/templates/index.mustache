@@ -10,11 +10,18 @@
             {{#userName}}
                 Logged in as: <span id="user">{{userName}}</span>
                 <a href="/logout" class="btn btn-info active" role="button">Logout</a>
+                <a href="/user" class="btn btn-warning" role="button" style="display:inline-block; float:fight;">내가 쓴 글 보기</a>
             {{/userName}}
             {{^userName}}
                 <a href="/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>
                 <a href="/oauth2/authorization/naver" class="btn btn-secondary active" role="button">Naver Login</a>
+
             {{/userName}}
+
+            <input type="text" name="searchContent" id="search-box" placeholder="검색창" value="">
+            <a  type="button" class="btn btn-success active" id="btn-search">검색</a>
+
+
         </div>
     </div>
     <br>

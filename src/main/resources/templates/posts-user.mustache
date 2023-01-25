@@ -1,0 +1,43 @@
+{{>layout/header}}
+
+<h1> Anthem53's Tiny Notice Board Site </h1>
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-6">
+
+
+            {{#userName}}
+                <span id="user">{{userName}} 's Posts</span>
+                <a href="/" class="btn btn-info active" role="button"> 돌아가기 </a>
+
+            {{/userName}}
+            {{^userName}}
+                <a href="/logout" class="btn btn-info active" role="button"> Error 이 버튼이 보이면 안됨. 원래대로 돌아가라.</a>
+            {{/userName}}
+        </div>
+    </div>
+    <br>
+    <!-- 목록 출력 영역 -->
+    <table class="table table-horizontal table-bordered">
+        <thead class="thead-strong">
+        <tr>
+            <th>게시글번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>최종수정일</th>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+        {{#posts}}
+            <tr>
+                <td>{{id}}</td>
+                <td><a href="/user/posts/inquiry/{{id}}">{{title}}</a></td>
+                <td>{{author}}</td>
+                <td>{{modifiedDate}}</td>
+            </tr>
+        {{/posts}}
+        </tbody>
+    </table>
+</div>
+
+{{>layout/footer}}

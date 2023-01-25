@@ -22,11 +22,35 @@
                 <textarea class="form-control" id="content" readonly>{{post.content}}</textarea>
             </div>
         </form>
-        <a href="/" role="button" class="btn btn-secondary">취소</a>
-        {{#isAuthor}}
-            <a href="/posts/update/{{post.id}}" role="button" class="btn btn-primary" >수정</a>
-            <button type="button" class="btn btn-danger" id="btn-delete">삭제</button>
-        {{/isAuthor}}
+        {{#isUserPost}}
+            <a href="/user" role="button" class="btn btn-secondary">취소</a>
+            {{#isAuthor}}
+                <a href="/user/posts/update/{{post.id}}" role="button" class="btn btn-primary" >수정</a>
+                <button type="button" class="btn btn-danger" id="btn-delete" >삭제</button>
+            {{/isAuthor}}
+
+        {{/isUserPost}}
+
+        {{^isUserPost}}
+            {{#isSearchPost}}
+                <a href="/search?searchContent={{searchContent}}" role="button" class="btn btn-secondary">취소</a>
+                {{#isAuthor}}
+                    <a href="/search/posts/update/{{post.id}}?searchContent={{searchContent}}" role="button" class="btn btn-primary" >수정</a>
+                    <button type="button" class="btn btn-danger" id="btn-delete" ">삭제</button>
+                {{/isAuthor}}
+
+            {{/isSearchPost}}
+            {{^isSearchPost}}
+                <a href="/" role="button" class="btn btn-secondary">취소</a>
+                {{#isAuthor}}
+                    <a href="/posts/update/{{post.id}}" role="button" class="btn btn-primary" >수정</a>
+                    <button type="button" class="btn btn-danger" id="btn-delete">삭제</button>
+                {{/isAuthor}}
+
+            {{/isSearchPost}}
+
+        {{/isUserPost}}
+
     </div>
     <br/>
     {{! 댓글 부분임}}
@@ -34,8 +58,8 @@
         <div class="card-header bi bi-chat-right-dots"> Write a Comment</div>
         {{! 댓글작성 부분}}
         <form>
-            <input type="hidden" id="commentAuthor" value="{{userName}}">
             {{#userName}}
+                <input type="hidden" id="commentAuthor" value="{{userName}}">
                 <div class="card-body">
                     <textarea id="comment" class="form-control" rows="4" cols="10" placeholder="댓글을 입력하세요"></textarea>
                 </div>
@@ -54,13 +78,27 @@
         {{! 댓글내용 부분 }}
         <ul class="list-group-flush">
             {{#comments}}
-                <li class="list-group-item">
-                <span>
-                    <span style="font-size: small">{{author}}</span>
-                    <button class="badge bi bi-pencil-square"> 수정</button>
-                    <button class="badge bi bi-trash"> 삭제</button>
-                </span>
-                    <div>{{content}}</div>
+                <li class="list-group-item" id="comment-{{id}}">
+                    <span>
+                        <span style="font-size: small">{{author}}</span>
+                        <span style="font-size: small">{{modifiedDate}}</span>
+
+                        <a type="button" class="btn-comment-update" data-toggle="collapse" data-target=".comment-modify-{{id}}"> 수정</a>
+                        <button class="btn-comment-delete" onclick="main.commentDelete({{post.id}},{{id}})"> 삭제</button>
+                    </span>
+                    <br>
+                    <div class="collapse comment-modify-{{id}} show">{{content}}</div>
+                    {{! 댓글 수정 }}
+                    <form class="collapse comment-modify-{{id}}">
+                        <input type="hidden" id="commentId" value="{{id}}">
+                        <input type="hidden" id="postId" value="{{post.id}}">
+                        <input type="hidden" id="commentAuthor" value="{{userName}}">
+                        <div class="form-group">
+                            <textarea class="form-control" id="comment-content" rows="3">{{content}}</textarea>
+                        </div>
+                        <button type="button" id="btn-comment-update" class="btn btn-outline-primary bi bi-pencil-square"> 수정</button>
+                    </form>
+
                 </li>
             {{/comments}}
         </ul>
