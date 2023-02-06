@@ -83,8 +83,10 @@
                         <span style="font-size: small">{{author}}</span>
                         <span style="font-size: small">{{modifiedDate}}</span>
 
-                        <a type="button" class="btn-comment-update" data-toggle="collapse" data-target=".comment-modify-{{id}}"> 수정</a>
-                        <button class="btn-comment-delete" onclick="main.commentDelete({{post.id}},{{id}})"> 삭제</button>
+                        {{#isCommentAuthor}}
+                            <a type="button" class="btn-comment-update" data-toggle="collapse" data-target=".comment-modify-{{id}}"> 수정</a>
+                            <button class="btn-comment-delete" onclick="main.commentDelete({{post.id}},{{id}})"> 삭제</button>
+                        {{/isCommentAuthor}}
                     </span>
                     <br>
                     <div class="collapse comment-modify-{{id}} show">{{content}}</div>

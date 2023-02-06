@@ -1,6 +1,7 @@
 package com.test.springboot.service.comments;
 
 
+import com.test.springboot.config.auth.dto.SessionUser;
 import com.test.springboot.domain.comments.Comments;
 import com.test.springboot.domain.comments.CommentsRepository;
 
@@ -45,10 +46,28 @@ public class CommentsService {
     }
 
     @Transactional
-    public List<CommentsListResponseDto> getCommentsList(Long post_id){
+    public List<CommentsListResponseDto> getCommentsList(Long post_id, SessionUser user){
         Posts current_posts = postsRepository.findById(post_id).orElseThrow(()-> new IllegalArgumentException("해당 게시글이 없습니다. id ="+post_id));;
-        // postsRepository.findAllDesc().stream().map(PostsListResponseDto::new).collect(Collectors.toList());
-        return current_posts.getComments().stream().map(CommentsListResponseDto::new).collect(Collectors.toList());
+
+        List<CommentsListResponseDto> result = current_posts.getComments().stream().map(CommentsListResponseDto::new).collect(Collectors.toList());
+
+        if (user != null ){
+            System.out.println(user.getName());
+            for (CommentsListResponseDto temp : result){
+                System.out.println(temp.getAuthor());
+                if (user.getName().equals(temp.getAuthor())){
+                    temp.setCommentAuthor(true);
+                }
+                else{
+                    temp.setCommentAuthor(false);
+                }
+            }
+        }
+        else{
+            System.out.println("user is null");
+        }
+
+        return result ;
 
     }
 

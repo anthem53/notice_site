@@ -78,7 +78,7 @@ public class indexController {
         PostsResponseDto dto = postsService.findById(id);
         model.addAttribute("post",dto);
 
-        List<CommentsListResponseDto> comments = commentsService.getCommentsList(id);
+        List<CommentsListResponseDto> comments = commentsService.getCommentsList(id, user);
         model.addAttribute("comments",comments);
         /* 댓글 관련 */
         if (comments != null && !comments.isEmpty()) {
@@ -95,7 +95,9 @@ public class indexController {
                 System.out.println("a == author");
             }
         }
-        else {;}
+        else {
+            model.addAttribute("userName",false);
+        }
 
         return "posts-inquiry";
     }
@@ -118,7 +120,7 @@ public class indexController {
         model.addAttribute("post",dto);
         model.addAttribute("isUserPost",true);
 
-        List<CommentsListResponseDto> comments = commentsService.getCommentsList(id);
+        List<CommentsListResponseDto> comments = commentsService.getCommentsList(id, user);
         model.addAttribute("comments",comments);
         /* 댓글 관련 */
         if (comments != null && !comments.isEmpty()) {
@@ -135,7 +137,9 @@ public class indexController {
                 System.out.println("a == author");
             }
         }
-        else {;}
+        else {
+            model.addAttribute("userName",false);
+        }
 
         return "posts-inquiry";
     }
@@ -170,7 +174,7 @@ public class indexController {
         model.addAttribute("isSearchPost",true);
         model.addAttribute("searchContent",searchContent);
 
-        List<CommentsListResponseDto> comments = commentsService.getCommentsList(id);
+        List<CommentsListResponseDto> comments = commentsService.getCommentsList(id, user);
         model.addAttribute("comments",comments);
         /* 댓글 관련 */
         if (comments != null && !comments.isEmpty()) {
